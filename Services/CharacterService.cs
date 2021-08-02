@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Dotnet_rpg.Data;
@@ -25,8 +26,8 @@ namespace Dotnet_rpg.Services
             var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
             var character = _mapper.Map<Character>(newCharacter);
             _context.Characters.Add(character);
-            await _context.SaveChangesAsync().ConfigureAwait(true);
-            
+            await _context.SaveChangesAsync();
+
             serviceResponse.Data = _context.Characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
             return serviceResponse;
         }
@@ -54,8 +55,7 @@ namespace Dotnet_rpg.Services
         public async Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters()
         {
             var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
-            var dbCharacters = await _context.Characters.ToListAsync();
-            serviceResponse.Data = dbCharacters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
+            serviceResponse.Data = await _context.Characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToListAsync();
             return serviceResponse;
         }
 

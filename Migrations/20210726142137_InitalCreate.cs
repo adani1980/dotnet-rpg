@@ -2,7 +2,7 @@
 
 namespace Dotnet_rpg.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitalCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
