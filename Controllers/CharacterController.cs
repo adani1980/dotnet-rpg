@@ -1,12 +1,16 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Dotnet_rpg.Dtos;
 using Dotnet_rpg.Models;
 using Dotnet_rpg.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dotnet_rpg.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class CharacterController : ControllerBase
@@ -58,6 +62,36 @@ namespace Dotnet_rpg.Controllers
             if(response.Data == null)
             {
                 return NotFound(response);
+            }
+            else
+            {
+                return Ok(response);
+            }
+        }
+
+        [HttpPost("Skill")]
+
+        public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> AddCharacterSkill(AddCharacterSkillDto newCharacterSkill)
+        {
+            var response = await _charcaters.AddCharacterSkill(newCharacterSkill);
+            if(response == null)
+            {
+                return BadRequest(response);
+            }
+            else
+            {
+                return Ok(response);
+            }
+        }
+
+        [HttpPost("Car")]
+
+        public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> AddCharacterCar(AddCharacterCarDto newCharacterCar)
+        {
+            var response = await _charcaters.AddCharacterCar(newCharacterCar);
+            if(response == null)
+            {
+                return BadRequest(response);
             }
             else
             {

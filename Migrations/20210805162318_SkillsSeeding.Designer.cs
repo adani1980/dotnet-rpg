@@ -4,35 +4,22 @@ using Dotnet_rpg.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dotnet_rpg.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210805162318_SkillsSeeding")]
+    partial class SkillsSeeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("CarCharacter", b =>
-                {
-                    b.Property<int>("CarsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CharactersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CarsId", "CharactersId");
-
-                    b.HasIndex("CharactersId");
-
-                    b.ToTable("CarCharacter");
-                });
 
             modelBuilder.Entity("CharacterSkill", b =>
                 {
@@ -49,44 +36,6 @@ namespace Dotnet_rpg.Migrations
                     b.ToTable("CharacterSkill");
                 });
 
-            modelBuilder.Entity("Dotnet_rpg.Models.Car", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Brand")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Model")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Cars");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Brand = "Mercedes",
-                            Model = "Cls500"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Brand = "Audi",
-                            Model = "RS7"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Brand = "BMW",
-                            Model = "M7500RS"
-                        });
-                });
-
             modelBuilder.Entity("Dotnet_rpg.Models.Character", b =>
                 {
                     b.Property<int>("Id")
@@ -97,13 +46,7 @@ namespace Dotnet_rpg.Migrations
                     b.Property<int>("Class")
                         .HasColumnType("int");
 
-                    b.Property<int>("Defeats")
-                        .HasColumnType("int");
-
                     b.Property<int>("Defence")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Fights")
                         .HasColumnType("int");
 
                     b.Property<int>("HitPoints")
@@ -119,9 +62,6 @@ namespace Dotnet_rpg.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Victories")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -182,12 +122,6 @@ namespace Dotnet_rpg.Migrations
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("Player");
-
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
 
@@ -218,21 +152,6 @@ namespace Dotnet_rpg.Migrations
                         .IsUnique();
 
                     b.ToTable("Weapons");
-                });
-
-            modelBuilder.Entity("CarCharacter", b =>
-                {
-                    b.HasOne("Dotnet_rpg.Models.Car", null)
-                        .WithMany()
-                        .HasForeignKey("CarsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Dotnet_rpg.Models.Character", null)
-                        .WithMany()
-                        .HasForeignKey("CharactersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("CharacterSkill", b =>
